@@ -1,0 +1,11 @@
+使用しているDBMSのバージョン
+10.4.28-MariaDB
+
+MariaDBの最新バージョン
+11.3.2-GA
+
+エディション
+MariaDBはMySQL Enterprise Editionのようなクローズドソースモジュールを含んでいない
+
+マニュアルの所在
+https://mariadb.com/kb/en/mariadb-10-4-28-release-notes/
