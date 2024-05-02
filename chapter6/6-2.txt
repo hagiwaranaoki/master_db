@@ -1,0 +1,28 @@
+Q:
+B-treeインデックスは更新が発生することで時間とともに構造が崩れ、性能が劣化する。
+これを防止するためにインデックスの再編成が必要になる。
+再編成を実施するための具体的な方法を、DBMSごとに調べて書く。
+
+A:
+PostgreSQL
+・REINDEXコマンドを使ってインデックスを再構築できる
+・PostgreSQL 12からはREINDEX CONCURRENTLYでオンラインでの再構築が可能
+・pg_repackを使うことでロックを最小限に抑えた再編成が可能
+
+MySQL
+・ALTER TABLE ... ENGINE=InnoDBでテーブルを再構築することでインデックスも再構築される
+・OPTIMIZE TABLEでもインデックスの再構築が行われる
+
+Oracle
+・ALTER INDEX ... REBUILDでインデックスを再構築できる
+・ALTER INDEX ... COALESCEでオンラインでインデックスブロックを結合し、断片化を解消できる
+・DBMS_REDEFINITIONパッケージを使うことでオンラインでの再構築が可能
+
+SQL Server
+・ALTER INDEX ... REBUILDでオフラインでインデックスを完全に再構築できる
+・ALTER INDEX ... REORGANIZEでオンラインでインデックスを断片化解消のために再編成できる
+・インデックスの断片化率に応じてREBUILDとREORGANIZEを使い分ける
+
+SQLite
+・REINDEXでインデックスを再構築できる
+・VACUUMでもインデックスの断片化解消が行われる
