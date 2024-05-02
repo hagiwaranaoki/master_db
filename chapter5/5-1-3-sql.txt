@@ -1,0 +1,39 @@
+SELECT
+	b.branch_office_id AS 支社コード,
+	b.id AS 支店コード,
+	COUNT(*) AS 商品数
+FROM
+	branch b
+INNER JOIN 
+		branch_office_product bop 
+	ON 
+		b.branch_office_id = bop.branch_office_id 
+	AND 
+		b.id = bop.branch_id
+GROUP BY
+	b.branch_office_id, b.id
+HAVING
+	COUNT(*) >= (
+			SELECT 
+				MAX(商品数)
+			FROM 
+			(
+				SELECT 
+					b.branch_office_id, 
+					b.id, 
+					COUNT(*) AS 商品数
+				FROM 
+					branch b
+				INNER JOIN 
+						branch_office_product bop 
+					ON 
+						b.branch_office_id = bop.branch_office_id 
+					AND 
+						b.id = bop.branch_id
+				GROUP BY
+					b.branch_office_id, 
+					b.id
+			) 
+			TMP
+		)
+;

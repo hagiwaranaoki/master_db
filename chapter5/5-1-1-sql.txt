@@ -1,0 +1,17 @@
+SELECT
+	item_class.id AS 商品分類コード,
+	item_class.name AS 商品分類名,
+	COUNT(*) AS 商品数
+FROM
+	item_class
+INNER JOIN
+	item
+ON
+	item_class.id = item.item_class_id
+GROUP BY
+	item_class_id,
+	item_class.id
+;
+
+
+※mysqlで教本のテーブル内容に則って作成したデータベースを使用しています。
