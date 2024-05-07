@@ -1,15 +1,23 @@
 SELECT
+	-- 商品分類テーブルのidカラムを商品分類コードとしてセレクト
 	item_class.id AS 商品分類コード,
+	-- 商品分類テーブルのnameカラムを商品分類名としてセレクト
 	item_class.name AS 商品分類名,
+	-- 商品テーブルのレコード数をカウントし、商品数としてセレクト
 	COUNT(*) AS 商品数
 FROM
+	-- 商品分類テーブルを指定
 	item_class
 INNER JOIN
+	 -- 商品テーブルを指定
 	item
 ON
+	-- 商品分類テーブルのidと商品テーブルのitem_class_idで内部結合
 	item_class.id = item.item_class_id
 GROUP BY
+	-- 商品テーブルのitem_class_idでグループ化
 	item_class_id,
+	-- 商品分類テーブルのidでグループ化
 	item_class.id
 ;
 
