@@ -9,14 +9,14 @@ FROM
 	-- 支店テーブルに別名bを付けて指定
 	branch b
 INNER JOIN 
-		-- 支社支店商品テーブルに別名bopを付けて指定
-		branch_office_product bop 
-	ON 
-			-- 支店テーブルのbranch_office_idと支社支店商品テーブルのbranch_office_idが一致
-			b.branch_office_id = bop.branch_office_id 
-		AND 
-			-- かつ、支店テーブルのidと支社支店商品テーブルのbranch_idが一致する条件で内部結合
-			b.id = bop.branch_id
+	-- 支社支店商品テーブルに別名bopを付けて指定
+	branch_office_product bop 
+ON 
+		-- 支店テーブルのbranch_office_idと支社支店商品テーブルのbranch_office_idが一致
+		b.branch_office_id = bop.branch_office_id 
+	AND 
+		-- かつ、支店テーブルのidと支社支店商品テーブルのbranch_idが一致する条件で内部結合
+		b.id = bop.branch_id
 GROUP BY
 	-- 支店テーブルのbranch_office_idとidでグループ化
 	b.branch_office_id, b.id
@@ -39,14 +39,14 @@ HAVING
 					-- 支店テーブルに別名bを付けて指定
 					branch b
 				INNER JOIN 
-						-- 支社支店商品テーブルに別名bopを付けて指定
-						branch_office_product bop 
-					ON 
-							-- 支店テーブルのbranch_office_idと支社支店商品テーブルのbranch_office_idが一致
-							b.branch_office_id = bop.branch_office_id 
-						AND 
-							-- かつ、支店テーブルのidと支社支店商品テーブルのbranch_idが一致する条件
-							b.id = bop.branch_id
+					-- 支社支店商品テーブルに別名bopを付けて指定
+					branch_office_product bop 
+				ON 
+						-- 支店テーブルのbranch_office_idと支社支店商品テーブルのbranch_office_idが一致
+						b.branch_office_id = bop.branch_office_id 
+					AND 
+						-- かつ、支店テーブルのidと支社支店商品テーブルのbranch_idが一致する条件
+						b.id = bop.branch_id
 				GROUP BY
 					-- 支店テーブルのbranch_office_idでグループ化
 					b.branch_office_id, 
