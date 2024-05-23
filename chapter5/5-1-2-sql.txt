@@ -1,32 +1,22 @@
+-- 支社・支店別の取扱商品の一覧を表示する
 SELECT
-	-- 支社テーブル（branch_office）のnameカラムを支社名としてセレクト
 	bo.name AS 支社名,
-	-- 支店テーブル（branch）のnameカラムを支店名としてセレクト
 	b.name AS 支店名,
-	-- 商品テーブル（item）のnameカラムを商品名としてセレクト
 	i.name AS 商品名
 FROM
-	-- 支社テーブルに別名boを付けて指定
 	branch_office bo
 INNER JOIN 
-	-- 支店テーブルに別名bを付けて指定
 	branch b 
 ON 
-	-- 支社テーブルのidと支店テーブルのbranch_office_idで内部結合
 	bo.id = b.branch_office_id
 INNER JOIN 
-	-- 支社支店商品テーブル（branch_office_product）に別名bopを付けて指定
 	branch_office_product bop 
 ON 
-	-- 支店テーブルのbranch_office_idと支社支店商品テーブルのbranch_office_idが一致
 	b.branch_office_id = bop.branch_office_id
 AND 
-	-- かつ、支店テーブルのidと支社支店商品テーブルのbranch_idが一致する条件で内部結合
 	b.id = bop.branch_id
 INNER JOIN 
-	-- 商品テーブルに別名iを付けて指定
 	item i 
 ON 
-	-- 支社支店商品テーブルのitem_idと商品テーブルのidで内部結合
 	bop.item_id = i.id
 ;

@@ -1,59 +1,42 @@
+-- 各支社・支店ごとの商品数をカウントし、最大の商品数以上の商品数を持つ支社・支店を取得する
 SELECT
-	-- 支店テーブル（branch）のbranch_office_idカラムを支社コードとしてセレクト
 	b.branch_office_id AS 支社コード,
-	-- 支店テーブルのidカラムを支店コードとしてセレクト
 	b.id AS 支店コード,
-	-- 支社支店商品テーブル（branch_office_product）のレコード数をカウントし、商品数としてセレクト
 	COUNT(*) AS 商品数
 FROM
-	-- 支店テーブルに別名bを付けて指定
 	branch b
-INNER JOIN 
-	-- 支社支店商品テーブルに別名bopを付けて指定
+INNER JOIN
 	branch_office_product bop 
-ON 
-		-- 支店テーブルのbranch_office_idと支社支店商品テーブルのbranch_office_idが一致
+ON
 		b.branch_office_id = bop.branch_office_id 
-	AND 
-		-- かつ、支店テーブルのidと支社支店商品テーブルのbranch_idが一致する条件で内部結合
+	AND
 		b.id = bop.branch_id
 GROUP BY
-	-- 支店テーブルのbranch_office_idとidでグループ化
-	b.branch_office_id, b.id
-HAVING
-	-- グループ化された結果の商品数が、以下のサブクエリの結果以上である条件を指定
+	b.branch_office_id,
+	b.id
+HAVING 
 	COUNT(*) >= (
-			SELECT 
-				-- サブクエリ内の商品数の最大値を取得
-				MAX(商品数)
-			FROM 
-			(
-				SELECT 
-					-- 支店テーブルのbranch_office_idを取得
-					b.branch_office_id, 
-					-- 支店テーブルのidを取得
-					b.id,
-					-- サブクエリ内で支社・支店ごとの商品数を集計 
-					COUNT(*) AS 商品数
-				FROM 
-					-- 支店テーブルに別名bを付けて指定
-					branch b
-				INNER JOIN 
-					-- 支社支店商品テーブルに別名bopを付けて指定
-					branch_office_product bop 
-				ON 
-						-- 支店テーブルのbranch_office_idと支社支店商品テーブルのbranch_office_idが一致
-						b.branch_office_id = bop.branch_office_id 
-					AND 
-						-- かつ、支店テーブルのidと支社支店商品テーブルのbranch_idが一致する条件
-						b.id = bop.branch_id
-				GROUP BY
-					-- 支店テーブルのbranch_office_idでグループ化
-					b.branch_office_id, 
-					-- 支店テーブルのidでグループ化
-					b.id
-			) 
-			-- サブクエリに別名TMPを付ける
-			TMP
-		)
+		-- 一時テーブルTMPから最大の商品数を取得する
+		SELECT
+			MAX(商品数)
+		FROM
+		(
+			-- 各支社・支店ごとの商品数をカウントする
+			SELECT
+				b.branch_office_id,
+				b.id,
+				COUNT(*) AS 商品数
+			FROM
+				branch b
+			INNER JOIN
+				branch_office_product bop 
+			ON
+					b.branch_office_id = bop.branch_office_id 
+				AND
+					b.id = bop.branch_id
+			GROUP BY
+				b.branch_office_id,
+				b.id
+		) TMP
+	)
 ;
