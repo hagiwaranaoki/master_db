@@ -4,19 +4,19 @@ SELECT
 	b.name AS 支店名,
 	i.name AS 商品名
 FROM
-	branch_office bo
+	branch_office AS bo
 INNER JOIN 
-	branch b 
+	branch AS b 
 ON 
 	bo.id = b.branch_office_id
 INNER JOIN 
-	branch_office_product bop 
+	branch_office_product AS bop 
 ON 
 	b.branch_office_id = bop.branch_office_id
 AND 
 	b.id = bop.branch_id
 INNER JOIN 
-	item i 
+	item AS i 
 ON 
 	bop.item_id = i.id
 ;

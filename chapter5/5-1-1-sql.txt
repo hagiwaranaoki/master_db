@@ -1,7 +1,7 @@
 -- 商品分類ごとの商品数を表示する
 SELECT
 	item_class.id AS 商品分類コード,
-	item_class.name AS 商品分類名,
+	item_class.name AS 分類名,
 	COUNT(*) AS 商品数
 FROM
 	item_class

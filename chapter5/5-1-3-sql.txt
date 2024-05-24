@@ -4,9 +4,9 @@ SELECT
 	b.id AS 支店コード,
 	COUNT(*) AS 商品数
 FROM
-	branch b
+	branch AS b
 INNER JOIN
-	branch_office_product bop 
+	branch_office_product AS bop 
 ON
 		b.branch_office_id = bop.branch_office_id 
 	AND
@@ -27,9 +27,9 @@ HAVING
 				b.id,
 				COUNT(*) AS 商品数
 			FROM
-				branch b
+				branch AS b
 			INNER JOIN
-				branch_office_product bop 
+				branch_office_product AS bop 
 			ON
 					b.branch_office_id = bop.branch_office_id 
 				AND
@@ -37,6 +37,6 @@ HAVING
 			GROUP BY
 				b.branch_office_id,
 				b.id
-		) TMP
+		) AS TMP
 	)
 ;
