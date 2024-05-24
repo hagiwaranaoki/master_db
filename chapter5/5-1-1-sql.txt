@@ -1,17 +1,15 @@
 -- 商品分類ごとの商品数を表示する
-SELECT
-	item_class.id AS 商品分類コード,
-	item_class.name AS 分類名,
-	COUNT(*) AS 商品数
-FROM
-	item_class
-INNER JOIN
-	item
-ON
-	item_class.id = item.item_class_id
-GROUP BY
-	item_class_id,
-	item_class.id
+SELECT 
+	ic.name AS 分類名,
+	COUNT(i.id) AS 商品数
+FROM 
+	item_class AS ic
+LEFT JOIN 
+	item AS i
+ON 
+	ic.id = i.item_class_id
+GROUP BY 
+	ic.name
 ;
 
 
