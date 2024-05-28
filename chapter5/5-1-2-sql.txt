@@ -9,14 +9,14 @@ INNER JOIN
 	branch AS b 
 ON 
 	bo.id = b.branch_office_id
-INNER JOIN 
-	branch_office_product AS bop 
-ON 
-	b.branch_office_id = bop.branch_office_id
-AND 
-	b.id = bop.branch_id
-INNER JOIN 
-	item AS i 
-ON 
-	bop.item_id = i.id
+	INNER JOIN 
+		branch_office_product AS bop 
+	ON 
+			b.branch_office_id = bop.branch_office_id
+		AND 
+			b.id = bop.branch_id
+			INNER JOIN 
+				item AS i 
+			ON 
+				bop.item_id = i.id
 ;

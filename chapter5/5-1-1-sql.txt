@@ -1,5 +1,6 @@
 -- 商品分類ごとの商品数を表示する
 SELECT 
+	ic.id AS 商品分類コード,
 	ic.name AS 分類名,
 	COUNT(i.id) AS 商品数
 FROM 
@@ -10,6 +11,8 @@ ON
 	ic.id = i.item_class_id
 GROUP BY 
 	ic.name
+ORDER BY
+	ic.id ASC
 ;
 
 
