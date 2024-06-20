@@ -1,0 +1,22 @@
+-- 支社・支店別の取扱商品の一覧を表示する
+SELECT
+	bo.name AS 支社名,
+	b.name AS 支店名,
+	i.name AS 商品名
+FROM
+	branch_office AS bo
+INNER JOIN 
+	branch AS b 
+ON 
+	bo.id = b.branch_office_id
+	INNER JOIN 
+		branch_office_product AS bop 
+	ON 
+			b.branch_office_id = bop.branch_office_id
+		AND 
+			b.id = bop.branch_id
+			INNER JOIN 
+				item AS i 
+			ON 
+				bop.item_id = i.id
+;

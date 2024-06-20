@@ -1,0 +1,25 @@
+Q:
+現行システムのハードウェアリソースを取得するためのOSコマンドをOS別に調べて整理する
+
+A:
+Windows:
+  CPU情報: wmic cpu get caption, deviceid, name, numberofcores, maxclockspeed, status
+  メモリ情報: wmic memorychip get capacity, devicelocator, manufacturer, memorytype, speed
+  ディスク情報: wmic diskdrive get caption, deviceid, size, model
+  グラフィックカード情報: wmic path win32_videocontroller get name, videoprocessor, adapterram, driverversion
+  ネットワークアダプター情報: wmic nic get name, manufacturer, macaddress, networkaddresses, speed
+
+macOS:
+  システム情報の概要: system_profiler SPHardwareDataType
+  CPU情報: sysctl -n machdep.cpu.brand_string
+  メモリ情報: system_profiler SPMemoryDataType
+  ディスク情報: diskutil list
+  グラフィックカード情報: system_profiler SPDisplaysDataType
+  ネットワークアダプター情報: system_profiler SPNetworkDataType
+
+Linux:
+  CPU情報: cat /proc/cpuinfo
+  メモリ情報: cat /proc/meminfo
+  ディスク情報: df -h または lsblk
+  グラフィックカード情報: lspci | grep -i vga
+  ネットワークアダプター情報: ifconfig または ip addr show

@@ -1,0 +1,42 @@
+-- 各支社・支店ごとの商品数をカウントし、最大の商品数以上の商品数を持つ支社・支店を取得する
+SELECT
+	b.branch_office_id AS 支社コード,
+	b.id AS 支店コード,
+	COUNT(*) AS 商品数
+FROM
+	branch AS b
+INNER JOIN
+	branch_office_product AS bop 
+ON
+		b.branch_office_id = bop.branch_office_id 
+	AND
+		b.id = bop.branch_id
+GROUP BY
+	b.branch_office_id,
+	b.id
+HAVING 
+	COUNT(*) >= (
+		-- 一時テーブルTMPから最大の商品数を取得する
+		SELECT
+			MAX(商品数)
+		FROM
+		(
+			-- 各支社・支店ごとの商品数をカウントする
+			SELECT
+				b.branch_office_id,
+				b.id,
+				COUNT(*) AS 商品数
+			FROM
+				branch AS b
+			INNER JOIN
+				branch_office_product AS bop 
+			ON
+					b.branch_office_id = bop.branch_office_id 
+				AND
+					b.id = bop.branch_id
+			GROUP BY
+				b.branch_office_id,
+				b.id
+		) AS TMP
+	)
+;
